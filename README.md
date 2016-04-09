@@ -1,6 +1,6 @@
 # Framer Primer Module
-The **Primer** module provides the ability to preload images and display a loading indicator. Sometimes when sharing a framer its sometimes desirable 
-ensure images are loaded the reciever can view or interact with the Framer and so this module tries to solve that issue.
+The **Primer** module provides the ability to preload images and display a loading indicator. Sometimes when sharing a framer it's desirable to 
+ensure images are loaded before the reciever can view or interact with the Framer, this module tries to solve that issue.
 
 ## Example
 http://share.framerjs.com/ke5eiwaj7b3a/
