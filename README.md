@@ -2,10 +2,10 @@
 The **Primer** module provides the ability to preload images and display a loading indicator. Sometimes when sharing a framer its sometimes desirable 
 ensure images are loaded the reciever can view or interact with the Framer and so this module tries to solve that issue.
 
-# Example
+## Example
 http://share.framerjs.com/ke5eiwaj7b3a/
 
-# Including the Module
+## Including the Module
 Place the primer.coffee module into the `/modules` directory of your project. Then require the module at the top of your prototype.
 
 ```javascript
@@ -13,7 +13,7 @@ Primer = require 'Primer'
 ```
 
 
-# Getting Started
+## Getting Started
 
 The Primer preloader is a layer that will default to the size of the screen and can be created at the end of your prototype.
 
