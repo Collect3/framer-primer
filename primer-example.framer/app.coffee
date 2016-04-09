@@ -8,7 +8,7 @@ aspect = 2650 / 2050
 width = Screen.height * aspect
 height = Screen.height
 
-# Hierarchy
+# Views
 # Image credit: https://unsplash.com/photos/NKSGuJzExIo
 sky = new Layer
 	image: "images/sky.png"
@@ -19,6 +19,7 @@ stars = new Layer
 	image: "images/stars.png"	
 	width: sourceWidth * 0.65
 	height: sourceHeight * 0.65
+	blur: 5
 stars.center()
 
 lines = new Layer
@@ -37,16 +38,31 @@ bg = new Layer
 	image: "images/bg.png"
 	width: width
 	height: height
-bg.blur = 1.5
-
+	y: 0
+	x: -100
+	scale: 1.0
+	blur: 5
 fg = new Layer
 	image: "images/fg.png"
 	width: width
 	height: height
-	scale: 1.1
+	scale: 1.2
+	y: -60
+	
+fire = new Layer
+	image: "images/fire.png"
+	width: 209 * 0.3
+	height: 245 * 0.3
+	x: 490
+	y: 990
+	superLayer: fg
 
 # Animation 
+updateFire = () ->
+	 fire.opacity = Utils.randomChoice([0.39,0.33,0.22,0.19,0.3,0.38, 0.35]) * 1.33
+	 
 startAnimation = () ->
+	setInterval(updateFire, (1 / 15) * 1000)	
 	stars.animate
 		repeat: true
 		curve: "linear"
@@ -59,19 +75,39 @@ startAnimation = () ->
 		time: 50.0
 		properties: 
 			rotation: -360	
+	sceneTime = 20
+	curve = "ease"
 	bg.animate
-		time: 60.0
-		curve: "linear"
+		time: sceneTime
+		curve: curve
 		properties:
-			x: -250
+			x: -300
+
+	fg.animate
+		time: sceneTime
+		curve: curve
+		properties:
+			x: -300
+		
+	bg.animate
+		time: sceneTime * 1.25
+		curve: curve
+		properties: 
+			y: 100
+			scale: 0.8
 			blur: 0
 	fg.animate
-		time: 60.0
-		curve: "linear"
+		curve: curve
+		time: sceneTime * 1.25
+		properties: 
+			y: 70
+			scale: 0.9
+	stars.animate
+		time: sceneTime 
+		curve: curve
 		properties:
-			scale: 1.0
-			x: -500		
-			
+			blur: 0	
+
 	
 # Present loading screen		
 primer = new Primer
