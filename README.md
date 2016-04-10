@@ -3,7 +3,7 @@ The **Primer** module provides the ability to preload images and display a loadi
 ensure images are loaded before the reciever can view or interact with the Framer, this module tries to solve that issue.
 
 ## Example
-http://share.framerjs.com/ke5eiwaj7b3a/
+http://share.framerjs.com/e1i852qzxiar/
 
 ## Including the Module
 Place the primer.coffee module into the `/modules` directory of your project. Then require the module at the top of your prototype.
