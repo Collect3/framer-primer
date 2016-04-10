@@ -27,13 +27,14 @@ class CircularProgress extends Layer
  	footer = '</svg>'
 		@.innerCircle.html = header + '<circle id="c" cx="50" cy="50" r="48" stroke="#3F3F3F" stroke-width="' + @.strokeWidth + '" fill="none"></circle>' + footer
 		@.outerCircle.html = header + '<circle id="progress-outer-circle" transform="rotate(270,50,50)" cx="50" cy="50" r="48" stroke="#fff" stroke-width="' + @.strokeWidth + '" fill="none"></circle>' + footer
-	setProgress:(percent) ->
-		svgPath = document.getElementById('progress-outer-circle')
-		r = (@.width / 2)
-		c = Math.PI*(r*2);
-		pct = (1 - percent)*c;
-		svgPath.style.strokeDasharray = c		
-		svgPath.style.strokeDashoffset = pct
+	@define "value",
+		set: (v) -> 
+			svgPath = document.getElementById('progress-outer-circle')
+			r = (@.width / 2)
+			c = Math.PI*(r*2);
+			pct = (1 - v)*c;
+			svgPath.style.strokeDasharray = c		
+			svgPath.style.strokeDashoffset = pct
 
 class module.exports extends Layer
 	constructor:(options) ->
@@ -50,6 +51,7 @@ class module.exports extends Layer
 			height: 100
 			superLayer: @
 		@.progress.center()
+		@.progress.value = 0
 	addImage:(src) ->
 		@.images.push(src)		
 	addFramerImages:() ->
@@ -58,20 +60,16 @@ class module.exports extends Layer
 				@.images.push(layer.image)
 	load:() ->
 		@.addFramerImages()
-		obj = @
 		for src in @.images
 			image = new Image()
-			image.onload = () ->
-				obj.imageDidLoad()
-			image.onerror = () ->
-				obj.imageDidLoad()
+			image.onload = => @.imageDidLoad()
+			image.onerror = => @.imageDidLoad()
 			image.src = src		
 	imageDidLoad:() ->
 		@.imagesLoaded++
-		@.progress.setProgress(@.imagesLoaded / @.images.length)
+		@.progress.value = @.imagesLoaded / @.images.length
 		if @.imagesLoaded >= @.images.length
 			@.finishedLoad()
 	finishedLoad:() ->
-		if @.onload
-			@.onload()
+		@.onload() if @.onload
 		@.destroy()

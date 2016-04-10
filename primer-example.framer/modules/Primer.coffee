@@ -60,13 +60,10 @@ class module.exports extends Layer
 				@.images.push(layer.image)
 	load:() ->
 		@.addFramerImages()
-		obj = @
 		for src in @.images
 			image = new Image()
-			image.onload = () ->
-				obj.imageDidLoad()
-			image.onerror = () ->
-				obj.imageDidLoad()
+			image.onload = => @.imageDidLoad()
+			image.onerror = => @.imageDidLoad()
 			image.src = src		
 	imageDidLoad:() ->
 		@.imagesLoaded++
@@ -74,6 +71,5 @@ class module.exports extends Layer
 		if @.imagesLoaded >= @.images.length
 			@.finishedLoad()
 	finishedLoad:() ->
-		if @.onload
-			@.onload()
+		@.onload() if @.onload
 		@.destroy()
